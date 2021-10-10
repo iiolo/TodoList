@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTodoState } from './TodoContext';
 import TodoItem from './TodoItem';
 
 const TodoListBlock = styled.div`
@@ -11,12 +12,20 @@ const TodoListBlock = styled.div`
 `;
 
 function TodoList() {
+    // TodoContext에서 context api로 만든 custom hook 사용
+    const todos = useTodoState();
+
     return (
         <TodoListBlock>
-            <TodoItem text ="프로젝트 생성하기" done={true}/>
-            <TodoItem text ="프로젝트 생성하기" done={true}/>
-            <TodoItem text ="프로젝트 생성하기" done={false}/>
-            <TodoItem text ="프로젝트 생성하기" done={false}/>
+            {/* 각 todo 데이터에 대하여 todo item으로 변환 */}
+            {todos.map(todo => (
+            <TodoItem
+            key={todo.id}
+            id={todo.id}
+            text={todo.text}
+            done={todo.done}
+            />
+            ))}
         </TodoListBlock>
     );
 }
